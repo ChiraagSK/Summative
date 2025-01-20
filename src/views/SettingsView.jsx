@@ -36,16 +36,16 @@ const SettingsView = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
 
-  // Fetch the user's past purchases from Firestore
+  
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        if (user?.uid) { // Use user.uid instead of user.email
-          const userRef = doc(firestore, "users", user.uid); // Correct document path using uid
+        if (user?.uid) { 
+          const userRef = doc(firestore, "users", user.uid); 
           const userDoc = await getDoc(userRef);
           if (userDoc.exists()) {
             const userData = userDoc.data();
-            setPreviousPurchases(userData.previousPurchases || []); // Set the previous purchases in context
+            setPreviousPurchases(userData.previousPurchases || []); 
           } else {
             console.log("No user data found!");
           }
@@ -56,17 +56,17 @@ const SettingsView = () => {
     };
 
     fetchUserData();
-  }, [user?.uid, setPreviousPurchases]); // Fetch when user uid changes
+  }, [user?.uid, setPreviousPurchases]); 
 
   const handleUpdateProfile = async () => {
     try {
       const userCredential = auth.currentUser;
 
-      // Check if the user document exists in Firestore
+      
       const userRef = doc(firestore, "users", userCredential.uid);
       const userDoc = await getDoc(userRef);
 
-      // If document doesn't exist, create it
+      
       if (!userDoc.exists()) {
         await setDoc(userRef, {
           firstName: newFirstName,
@@ -78,27 +78,27 @@ const SettingsView = () => {
         console.log("User document created!");
       }
 
-      // Update displayName (first and last name) in Firebase Authentication
+      
       await updateProfile(userCredential, {
         displayName: `${newFirstName} ${newLastName}`,
       });
 
-      // Update email if it has changed
+      
       if (newEmail !== user.email) {
         await updateEmail(userCredential, newEmail);
       }
 
-      // Update password if provided
+      
       if (newPassword) {
         await updatePassword(userCredential, newPassword);
       }
 
-      // Update genres in Firestore
+      
       await updateDoc(userRef, {
         genres: newGenres,
       });
 
-      // Update context user data
+      
       setUser({
         ...user,
         firstName: newFirstName,
@@ -119,7 +119,7 @@ const SettingsView = () => {
     }
   };
 
-  // Update genre preferences
+  
   const handleGenreChange = (event) => {
     const { value, checked } = event.target;
     setNewGenres((prevGenres) =>
@@ -127,7 +127,7 @@ const SettingsView = () => {
     );
   };
 
-  // Display previous purchases
+  
   const pastPurchasesList = previousPurchases.map((purchase, index) => (
     <li key={index}>
       <img
@@ -139,7 +139,7 @@ const SettingsView = () => {
     </li>
   ));
 
-  // Ensure the user is logged in via email to make updates
+  
   if (!user.email) {
     return <p>Please log in with your email to update your settings.</p>;
   }
@@ -151,7 +151,7 @@ const SettingsView = () => {
       {error && <p style={{ color: "red" }}>{error}</p>}
       {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
 
-      {/* First Name */}
+    
       <div>
         <label>First Name:</label>
         <input
@@ -161,7 +161,7 @@ const SettingsView = () => {
         />
       </div>
 
-      {/* Last Name */}
+      
       <div>
         <label>Last Name:</label>
         <input
@@ -171,7 +171,7 @@ const SettingsView = () => {
         />
       </div>
 
-      {/* Email */}
+    
       <div>
         <label>Email:</label>
         <input
@@ -181,7 +181,7 @@ const SettingsView = () => {
         />
       </div>
 
-      {/* Password */}
+    
       <div>
         <label>Password:</label>
         <input
@@ -191,7 +191,7 @@ const SettingsView = () => {
         />
       </div>
 
-      {/* Genre Preferences */}
+      
       <h3>Select Your Preferred Genres:</h3>
       <div>
         {ALL_GENRES.map((genre) => (
@@ -199,7 +199,7 @@ const SettingsView = () => {
             <input
               type="checkbox"
               value={genre}
-              checked={newGenres.includes(genre)} // Pre-check genres the user selected
+              checked={newGenres.includes(genre)} 
               onChange={handleGenreChange}
             />
             <label>{genre}</label>
