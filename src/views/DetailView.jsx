@@ -4,13 +4,12 @@ import axios from "axios";
 import { useStoreContext } from "../context"; // Access cart and context functions
 
 const DetailView = () => {
-  const { id } = useParams(); // Get movie ID from URL
+  const { id } = useParams(); 
   const { user, cart, previousPurchases, addToCart, setCart } = useStoreContext(); // Access context for cart and purchases
   const [movie, setMovie] = useState(null);
   const [isInCart, setIsInCart] = useState(false);
   const navigate = useNavigate();
 
-  // Fetch movie details on component mount
   useEffect(() => {
     axios
       .get(`https://api.themoviedb.org/3/movie/${id}`, {
@@ -25,20 +24,19 @@ const DetailView = () => {
       .catch((error) => console.error("Error fetching movie details:", error));
   }, [id]);
 
-  // Check if the movie is already in the cart or has been previously purchased
+  // 
   useEffect(() => {
     setIsInCart(cart.has(id) || previousPurchases.some(purchase => purchase.id === id));
   }, [cart, previousPurchases, id]);
 
   const handleBuy = () => {
-    if (isInCart) return; // If already in cart or purchased, do nothing
-
-    addToCart(movie); // Add movie to cart
-    setIsInCart(true); // Update button state to "Added to Cart"
+    if (isInCart) return; 
+    addToCart(movie); 
+    setIsInCart(true); 
   };
 
   const goToCart = () => {
-    navigate("/cart"); // Navigate to the cart page
+    navigate("/cart"); 
   };
 
   if (!movie) return <p>Loading...</p>;
