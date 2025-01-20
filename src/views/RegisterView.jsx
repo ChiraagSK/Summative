@@ -48,17 +48,17 @@ const RegisterView = () => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const firebaseUser = userCredential.user;
 
-      // Save user info to Firestore
+      
       const userRef = doc(firestore, 'users', firebaseUser.uid);
       await setDoc(userRef, {
         firstName,
         lastName,
         email,
-        genres: selectedGenres, // Store genres in Firestore
-        previousPurchases: [], // Initialize previous purchases
+        genres: selectedGenres, 
+        previousPurchases: [], 
       });
 
-      // Save user info in React Context
+      
       setUser({
         uid: firebaseUser.uid,
         firstName,
@@ -84,17 +84,17 @@ const RegisterView = () => {
 
       const [googleFirstName, googleLastName = ''] = firebaseUser.displayName?.split(' ') || [''];
 
-      // Save user info to Firestore
+      
       const userRef = doc(firestore, 'users', firebaseUser.uid);
       await setDoc(userRef, {
         firstName: googleFirstName,
         lastName: googleLastName,
         email: firebaseUser.email,
-        genres: selectedGenres, // Store genres in Firestore
-        previousPurchases: [], // Initialize previous purchases
+        genres: selectedGenres, 
+        previousPurchases: [], 
       });
 
-      // Save user info in React Context
+      
       setUser({
         uid: firebaseUser.uid,
         firstName: googleFirstName,
