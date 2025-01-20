@@ -12,20 +12,20 @@ const Header = () => {
 
   const logout = async () => {
     try {
-      // Clear context data
+      
       setUser(null);
       setCart(new Map());
       setPreviousPurchases([]);
       
-      // Clear local storage
+      
       localStorage.removeItem("user");
       localStorage.removeItem("cart");
       localStorage.removeItem("previousPurchases");
 
-      // Sign out from Firebase Authentication
+      
       await signOut(auth);
 
-      // Redirect to the home page
+      
       navigate("/");
     } catch (err) {
       console.error("Error logging out:", err);
