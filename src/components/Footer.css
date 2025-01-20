@@ -1,0 +1,21 @@
+footer {
+  background-color: #141414;
+  color: #b3b3b3;
+  padding: 20px 0;
+  text-align: center;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  font-size: 1rem;
+}
+
+footer p {
+  margin: 0;
+  font-size: 1rem;
+  color: #b3b3b3;
+}
+
+footer p:hover {
+  color: #e50914; /* Signature Netflix Red on hover */
+  cursor: pointer;
+}
