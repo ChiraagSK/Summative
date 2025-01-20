@@ -20,20 +20,20 @@ const LoginView = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const firebaseUser = userCredential.user;
   
-      // Fetch user data from Firestore
+      // user data
       const userRef = doc(firestore, 'users', firebaseUser.uid);
       const userDoc = await getDoc(userRef);
   
       if (userDoc.exists()) {
         const userData = userDoc.data();
   
-        // Set user data in context, including genres
+        // data in context
         setUser({
           uid: firebaseUser.uid,
           email: firebaseUser.email,
           firstName: userData.firstName,
           lastName: userData.lastName,
-          genres: userData.genres || [], // Ensure genres are retrieved
+          genres: userData.genres || [], 
         });
   
         navigate('/movies');
@@ -53,20 +53,20 @@ const LoginView = () => {
       const userCredential = await signInWithPopup(auth, provider);
       const firebaseUser = userCredential.user;
   
-      // Fetch user data from Firestore
+      
       const userRef = doc(firestore, 'users', firebaseUser.uid);
       const userDoc = await getDoc(userRef);
   
       if (userDoc.exists()) {
         const userData = userDoc.data();
   
-        // Set user data in the context
+        
         setUser({
           uid: firebaseUser.uid,
           email: firebaseUser.email,
           firstName: userData.firstName,
           lastName: userData.lastName,
-          genres: userData.genres || [], // Fetch genres from Firestore
+          genres: userData.genres || [], 
         });
   
         navigate('/movies');
