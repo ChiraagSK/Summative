@@ -17,18 +17,18 @@ export const StoreProvider = ({ children }) => {
     return savedPurchases ? JSON.parse(savedPurchases) : [];
   });
 
-  // Sync user data with localStorage
+  // localStorage (reload issue fix)
   const setUser = (newUser) => {
     setUserState(newUser);
     localStorage.setItem('user', JSON.stringify(newUser));
   };
 
-  // Sync previous purchases with localStorage
+  
   useEffect(() => {
     localStorage.setItem('previousPurchases', JSON.stringify(previousPurchases));
   }, [previousPurchases]);
 
-  // Fetch previous purchases from Firestore when the user logs in
+
   useEffect(() => {
     const fetchUserData = async () => {
       if (user?.uid) {
@@ -48,7 +48,7 @@ export const StoreProvider = ({ children }) => {
     fetchUserData();
   }, [user?.uid]);
 
-  // Handle logout
+  
   const logout = () => {
     setUser(null);
     setCart(new Map());
